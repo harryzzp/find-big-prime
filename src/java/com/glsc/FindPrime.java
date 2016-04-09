@@ -18,8 +18,8 @@ public class FindPrime {
 //        traditional(scale);
 //        newThread(scale);
 //        innerClass(scale);
-        forkJoin(scale);
-//        lambda(scale);
+//        forkJoin(scale);
+        lambda(scale);
         long end = System.currentTimeMillis();
         System.out.println("Took " + (end - start) + "ms");
     }
@@ -37,11 +37,10 @@ public class FindPrime {
                 return true;
             });
         }
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        ExecutorService executorService = Executors.newCachedThreadPool();
-//        ExecutorService executorService = Executors.newFixedThreadPool(4);
+        ExecutorService executorService = Executors.newFixedThreadPool(64);
         try {
             executorService.invokeAll(list);
+            executorService.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,6 +93,7 @@ public class FindPrime {
 //        ExecutorService executorService = Executors.newFixedThreadPool(4);
         try {
             executorService.invokeAll(list);
+            executorService.shutdown();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
